@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Payment for CV{% endblock %}
+
+{% block content %}
+
+<h2>Payment ({{ paymethod }})</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form role="form" 
+                  action="/paypal/" 
+                  method="POST" 
+                  id="paypal-form">{% csrf_token %}
+              <div class="form-group">
+                    <label for="id_cv_type_0">
+                        <input name="cv_type" 
+                               type="radio" 
+                               value="in" 
+                               checked /> 
+                               CV with LinkedIn profile ($100)
+                    </label>
+              </div>
+              <div class="form-group">
+                    <label>
+                        <input name="cv_type" 
+                               type="radio" 
+                                value="cv" /> 
+                                CV only ($75)
+                    </label>
+              </div>
+              <hr>
+                <button type="submit" 
+                        class="btn btn-primary">
+                        Pay Now
+                </button>
+                <input type="hidden" name="pk" value="{{ pk }}">
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+
+{%endblock %}

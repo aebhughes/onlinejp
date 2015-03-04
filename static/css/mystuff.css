@@ -1,0 +1,21 @@
+strong.powerful {
+    font-weight: bold;
+    font-weight: 900;
+    font-size: 2em;
+    color: red;
+    }
+#id_cv_type,
+#id_contact_pref {
+    list-style-type: none;
+    }
+.errorlist {
+    list-style-type: none;
+    color: red;
+    font-weight: bold;
+    }
+img.strap {
+    width : 100%;
+    }
+img.logo {
+    width : 75%;
+    }

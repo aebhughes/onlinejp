@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}How it Works{% endblock %}
+
+{% block content %}
+
+<h3>Get your Professional CV now</h3>
+
+<p>
+A simple 5 step process will get you your CV in record time. 
+</p>
+
+<form role="form" 
+      action="." 
+      method="POST" 
+      enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="step1">Step 1:</label>
+    {{ form.name }}
+    {{ form.name.errors }}
+  </div>  
+  <div class="form-group">
+    <label for="step2">Step 2:</label>
+        {{ form.cv }}
+        {{ form.cv.errors }}
+    <p class="help-block">
+      Upload your current CV</br>
+      <small class="text-muted">
+      Word or any commonly used digital format will do..
+      </small>
+    </p>
+  </div>  
+  <div class="form-group">
+    <label for="step3">Step 3:</label>
+    {{ form.email }}
+    {{ form.email.errors }}
+    <p class="help-block">
+       <small class="text-muted">
+       We need this to contact you
+       </small> 
+    </p>
+  </div>  
+  <div class="form-group">
+    <label for="step4">Step 4:</label>
+    {{ form.phone }}
+    {{ form.phone.errors }}
+    <p class="help-block">
+      <small class="text-muted">
+        Please include country dialing code (+27, +44, etc.)
+      </small> 
+    </p>
+  </div>  
+  <div class='form-group'>
+    <label for="step5">Step 5:</label>
+    <p class="help-block">
+      <small class="text-muted">
+        Pay
+      </small> 
+    </p>
+
+   <p>
+    <input type="hidden" value="{{ ref }}" name="pk">
+   </p>
+    <p>
+        <button type="submit" 
+                name="action" 
+                value="stripe"
+                class="btn btn-primary">
+                Pay by Card
+                </button>
+    </p>
+    <p>
+         <button name="action" value="paypal">
+         <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" 
+              align="left" 
+              style="margin-right:7px;">
+                </button>
+    </p>
+  </div>
+</form>
+
+{%endblock %}

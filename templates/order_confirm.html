@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmation{% endblock title %}
+
+{% block content %}
+<h1 class="text-center">Thank-you for Order</h1>
+
+<p class="text-center">
+Your payment has been processed successfully and all the details have been
+sent to us.
+</p>
+<p class="reference text-center">
+Your reference is: <strong>{{ ref }}</strong>
+</p>
+
+<p class="">
+So, what happens now?
+</p>
+<p class="">
+You have been sent an email detailing the next step.  If no email arrives, 
+please check that it was not redirected to your spam folder.  Please let us
+know if there are any problems at <a href="mailto:lynette@yourcvservices.com">
+lynette@yourcvservices.com</a> or you can use out Contact Us form or 
+phone us +27 81 060-9245.
+</p>
+
+{%endblock %}
