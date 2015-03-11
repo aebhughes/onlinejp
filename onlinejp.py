@@ -29,18 +29,7 @@ db = couch['yourcv']
 
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app)
-app.secret_key = 'vhcGccovggJ2b+71zs0gAqu3KeWBhc8JzPy60KNrKlZq'
-
-UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = set(['jpg', 'png', 'jpeg', 'gif'])
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
-
-MAIL_SERVER = 'smtp.gmail.com'
-MAIL_PORT = 465
-MAIL_USE_SSL = True
-MAIL_USERNAME = 'alex@customsoftuk.com'
-MAIL_PASSWORD = 'Custom Soft Hero!'
-DEFAULT_MAIL_SENDER = 'pieter@postnetsa.co.za'
+app.config.from_object('settings')
 mail = Mail(app)
 
 # Logging
@@ -78,8 +67,22 @@ def how_works():
 def buy_now():
     return render_template('buy_now.html', blogs=build_blog_list())
 
-@app.route('/contact')          # home.views.contact
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
+
+    if request.method == 'POST':
+        cm = db['email_contact']
+        body = cm['body'].format(name=request.form['name'],
+                                 email=request.form['email'],
+                                 phone=request.form['phone'],
+                                 msg=request.form['message'])
+        msg = Message(subject=cm['subject'],
+                      recipients=[cm['to']],
+                      body=body,
+                      sender=request.form['email'],
+                      reply_to=request.form['email'])
+        mail.send(msg)
+        return render_template('thankyou.html', blogs=build_blog_list())
     return render_template('contact.html', blogs=build_blog_list())
 
 @app.route('/payment')          # home.views.payment
