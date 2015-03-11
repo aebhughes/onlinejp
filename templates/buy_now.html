@@ -16,13 +16,21 @@ A simple 5 step process will get you your CV in record time.
       enctype="multipart/form-data">
   <div class="form-group">
     <label for="step1">Step 1:</label>
-    {{ form.name }}
-    {{ form.name.errors }}
+    <input class="form-control" 
+            id="step1" 
+            maxlength="255" 
+            name="name" 
+            placeholder="Your name" 
+            type="text" 
+            />
   </div>  
   <div class="form-group">
     <label for="step2">Step 2:</label>
-        {{ form.cv }}
-        {{ form.cv.errors }}
+    <input class="form-control" 
+            id="step2" 
+            name="cv" 
+            type="file" 
+            />
     <p class="help-block">
       Upload your current CV</br>
       <small class="text-muted">
@@ -32,8 +40,13 @@ A simple 5 step process will get you your CV in record time.
   </div>  
   <div class="form-group">
     <label for="step3">Step 3:</label>
-    {{ form.email }}
-    {{ form.email.errors }}
+    <input class="form-control" 
+           id="step3" 
+           maxlength="255" 
+           name="email" 
+           placeholder="Your contact email" 
+           type="email" 
+           />
     <p class="help-block">
        <small class="text-muted">
        We need this to contact you
@@ -42,8 +55,13 @@ A simple 5 step process will get you your CV in record time.
   </div>  
   <div class="form-group">
     <label for="step4">Step 4:</label>
-    {{ form.phone }}
-    {{ form.phone.errors }}
+    <input class="form-control" 
+            id="step4" 
+            maxlength="255" 
+            name="phone" 
+            placeholder="Your contact number" 
+            type="text" 
+            />
     <p class="help-block">
       <small class="text-muted">
         Please include country dialing code (+27, +44, etc.)

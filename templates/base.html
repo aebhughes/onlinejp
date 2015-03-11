@@ -78,12 +78,11 @@
         <div class="col-md-2"><!-- Level 2: Left pane -->
             <h4>Hints and Tips</h4>
             <ul class="list-unstyled">
-                <li> <a href="/job-search">Looking for a new Job</a> </li>
-                <li> <a href="/cover-letter">Job Application Tips</a> </li>
-                <li> 
-                    <a href="/telephone-interview">Telephone Interviews</a> 
+                {% for blog in blogs %}
+                <li>
+                    <a href="/blog/{{ blog._id }}">{{ blog.title }}</a>
                 </li>
-                <li> <a href="/skype-interview">Skype Interview Tips</a> </li>
+                {% endfor %}
             </ul>
         </div><!-- Level 2: Left pane -->
 

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}{{ blog.title }}{% endblock %}
+
+{% block content %}
+
+{{ blog.body|safe }}
+
+{%endblock %}
