@@ -11,8 +11,8 @@ A simple 5 step process will get you your CV in record time.
 </p>
 
 <form role="form" 
-      action="." 
       method="POST" 
+      action="/payment"
       enctype="multipart/form-data">
   <div class="form-group">
     <label for="step1">Step 1:</label>
@@ -22,6 +22,7 @@ A simple 5 step process will get you your CV in record time.
             name="name" 
             placeholder="Your name" 
             type="text" 
+            required
             />
   </div>  
   <div class="form-group">
@@ -30,6 +31,7 @@ A simple 5 step process will get you your CV in record time.
             id="step2" 
             name="cv" 
             type="file" 
+            required
             />
     <p class="help-block">
       Upload your current CV</br>
@@ -46,6 +48,7 @@ A simple 5 step process will get you your CV in record time.
            name="email" 
            placeholder="Your contact email" 
            type="email" 
+           required
            />
     <p class="help-block">
        <small class="text-muted">
@@ -70,29 +73,13 @@ A simple 5 step process will get you your CV in record time.
   </div>  
   <div class='form-group'>
     <label for="step5">Step 5:</label>
-    <p class="help-block">
-      <small class="text-muted">
-        Pay
-      </small> 
-    </p>
+    <p>
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{{ key }}"
+            data-description="A Flask Charge"
+            data-amount="10000">
+    </script>
 
-   <p>
-    <input type="hidden" value="{{ ref }}" name="pk">
-   </p>
-    <p>
-        <button type="submit" 
-                name="action" 
-                value="stripe"
-                class="btn btn-primary">
-                Pay by Card
-                </button>
-    </p>
-    <p>
-         <button name="action" value="paypal">
-         <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" 
-              align="left" 
-              style="margin-right:7px;">
-                </button>
     </p>
   </div>
 </form>

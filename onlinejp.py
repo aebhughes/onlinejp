@@ -19,6 +19,7 @@ from logging.handlers import RotatingFileHandler
 from operator import itemgetter
 
 import stripe
+
 import paypalrestsdk
 
 import couchdb
@@ -31,6 +32,8 @@ app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app)
 app.config.from_object('settings')
 mail = Mail(app)
+stripe.api_key = app.config['STRIPE_KEY']
+
 
 # Logging
 
@@ -63,10 +66,6 @@ def index():
 def how_works():
     return render_template('how_works.html', blogs=build_blog_list())
 
-@app.route('/buy-now')          # home.views.buy_now
-def buy_now():
-    return render_template('buy_now.html', blogs=build_blog_list())
-
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
 
@@ -85,29 +84,77 @@ def contact():
         return render_template('thankyou.html', blogs=build_blog_list())
     return render_template('contact.html', blogs=build_blog_list())
 
-@app.route('/payment')          # home.views.payment
-def cc_payment():
-    return render_template('order_confirm.html', blogs=build_blog_list()) 
+@app.route('/buy-now', methods=['GET','POST'])
+def buy_now():
+    return render_template('buy_now.html', blogs=build_blog_list(),
+                            key=app.config['PUB_KEY'])
 
-@app.route('/paypal')           # home.views.paypal
-def paypal_payment():
-    return redirect('/')
+@app.route('/payment', methods=['GET','POST'])
+def payment():
+    customer = stripe.Customer.create(
+        email='customer@example.com',
+        card=request.form['stripeToken']
+    )
 
-@app.route('/paypal-accept')    # paypal_accept (view)
-def paypal_accept():
+    charge = stripe.Charge.create(
+        customer=customer.id,
+        amount=10000,
+        currency='usd',
+        description='CV Payment'
+    )
     return render_template('order_confirm.html', blogs=build_blog_list())
 
-@app.route('/paypal-cancel')    # paypal_cancel.html (static)
-def paypal_cancel():
-    return render_template('paypal_cancel.html', blogs=build_blog_list())
-    pass
+
+@app.route('/paypal')
+def paypal_payment():
+    if request.method == 'POST':
+        amt = 10000
+        desc = "CV / Resume with LinkIn profile ($100)"
+        print 'request.POST={}'.format(request.POST)
+
+        # get access token
+        paypalrestsdk.configure(
+                  dict(mode=app.config['PAYPAL_MODE'],
+                       client_id=app.config['PAYPAL_ID'],
+                       client_secret=app.config['PAYPAL_SECRET']))
+
+        # create payment object
+        payment = paypalrestsdk.Payment({
+          "intent": "sale",
+          "payer": {"payment_method": "paypal"},
+          "redirect_urls": {
+                  "return_url": settings.PAYPAL_RETURN,
+                  "cancel_url": settings.PAYPAL_CANCEL
+                            },
+           "transactions": [{
+               "amount": {
+                     "total": amt,
+                     "currency": "USD"},
+               "description": desc}]})
+    
+        if payment.create():
+            print 'Payment [{}] created.'.format(payment.id)
+            request.session['payment_id'] = payment.id
+            request.session['pk'] = request.POST['pk']
+            for link in payment.links:
+                if link.method == 'REDIRECT':
+                    redirect_url = str(link.href)
+                    print 'Redirect for approval: {}'.format(redirect_url)
+
+            # redirect to PayPal
+            return redirect(redirect_url, payment)
+        else:
+            return render_template('error.html')
+    return redirect(url_for('index'))
 
 @app.route('/blog/<slug>')
 def blogs(slug):
     if slug in db:
         blog = db[slug]
-        return render_template('blog_page.html', blog=blog, blogs=build_blog_list())
-    return render_template('no_blog_page.html', blogs=build_blog_list())
+        return render_template('blog_page.html', blog=blog, 
+                                blogs=build_blog_list())
+    return render_template('no_blog_page.html', 
+                            blogs=build_blog_list())
 
 if __name__ == '__main__':
     app.run(debug=True)
