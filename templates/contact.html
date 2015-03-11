@@ -4,32 +4,54 @@
 
 {% block content %}
 <h1>Contact Us</h1>
-<p>
+<div>
       <address>
       <strong>Telephone : </strong>
       +27 (0) 81 060 9245</br>
       <strong>e-mail : </strong>
       <a href="mailto:ahughes@onlinejobprofiles.com">ahughes@onlinejobprofiles.com</a>
       </address>
-</p>
-<p>
+</div>
+
 <form class="form" action="" method="POST">
   <div class='form-group'>
-      {{ form.name }}
+      <input class="form-control" 
+                type="text" 
+                name="name" 
+                placeholder="Your name"
+                />
   </div>
   <div class='form-group'>
-      {{ form.email }}
+      <input class="form-control" 
+             type="email" 
+             name="email" 
+             placeholder="Your email" 
+             />
   </div>
   <div class='form-group'>
-      {{ form.phone }}
+      <input class="form-control" 
+             type="text" 
+             name="phone" 
+             placeholder="Contact Number" 
+             />
   </div>
   <div class='form-group'>
-      {{ form.message }}
+      <textarea class="form-control" 
+                cols="40" 
+                rows="10"
+                name="message" 
+                placeholder="your message" 
+                >
+      </textarea>
   </div>
   <div class='form-group'>
-      <button type="submit" name="action" value="confirm"
-              class="btn btn-primary">Send email</button>
+      <button type="submit" 
+              name="action" 
+              value="confirm"
+              class="btn btn-primary"
+              >
+              Send message
+              </button>
   </div>
 </form>
-</p>
 {%endblock %}
