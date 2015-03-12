@@ -1,0 +1,6 @@
+.*
+exclude.txt
+onlinejp.log
+py2env/
+*.pyc
+static/upload/

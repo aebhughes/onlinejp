@@ -5,11 +5,11 @@ ALLOWED_EXTENSIONS = set(['DOC', 'DOCX', 'XLS', 'XLSX',
                           'ODT', 'PAGES', 'WPD', 'WPS', 
                           'RTF', 'PDF', 'TEX', 'TXT'])
 
-MAIL_SERVER = 'smtp.gmail.com'
+MAIL_SERVER = 'smtpout.secureserver.net'
 MAIL_PORT = 465
 MAIL_USE_SSL = True
-MAIL_USERNAME = 'alex@customsoftuk.com'
-MAIL_PASSWORD = 'Custom Soft Hero!'
+MAIL_USERNAME = 'lynette@yourcvservices.com'
+MAIL_PASSWORD = 'fr3dalex'
 
 STRIPE_KEY = "sk_test_4QIt0oU6OhdzMyW1CbCIA8iq"  # Test
 PUB_KEY = 'pk_test_uzlMf5TXNRcKBcS43cQ35cvb' 
