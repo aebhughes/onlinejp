@@ -2,7 +2,7 @@
  
 NAME="onlinejp"
 FLASKDIR=/srv/onlinejp
-VIRTENV=/srv/py2env
+VIRTENV=/py2env
 SOCKFILE=/srv/onlinejp/run/gunicorn.sock
 USER=root
 GROUP=root
