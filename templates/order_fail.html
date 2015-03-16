@@ -6,21 +6,20 @@
 <h1 class="text-center">Payment Failed</h1>
 
 <p class="text-center">
-Sorry, it looks like there was a problem with your payment.
+Sorry, but it looks like there was a problem with your payment.
 </p>
 <p>
-The message we received back was: {{ msg }}
+The message we received back was: 
+<div>
+&ldquo;{{ message }}&rdquo;
+</div>
 </p>
 <p class="reference text-center">
 Your reference is: <strong>{{ ref }}</strong>
 </p>
 <p class="text-center">
-If there are any problems on our side, we have been notified and will
-attend to it and be in contact.
-</p>
-
-<p>
-Please feel free to contact us by email or by using our contact form.
+Please check with your bank.  If there is anything we can do to assist, please
+feel free to contact us.
 </p>
 
 {%endblock %}

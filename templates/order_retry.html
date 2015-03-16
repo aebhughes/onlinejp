@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Network Fail{% endblock title %}
+
+{% block content %}
+<h1 class="text-center">Network Failure</h1>
+
+<p class="text-center">
+There appears to be a problem with your connection. (Don&rsquo;t worry. No
+charge has been processed yet!)
+</p>
+<p>
+Please press the &ldquo;Back&rdquo; button and try again.
+</p>
+<p class="reference text-center">
+Your reference is: <strong>{{ ref }}</strong>
+</p>
+
+{%endblock %}

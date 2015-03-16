@@ -22,8 +22,6 @@ import os
 
 import stripe
 
-import paypalrestsdk
-
 import couchdb
 
 couch = couchdb.Server()
@@ -46,6 +44,12 @@ handler.setLevel(logging.DEBUG)
 handler.setFormatter(formatter)
 app.logger.addHandler(handler)
 
+# Logging for production
+if not app.debug:
+    stream_handler = logging.StreamHandler()
+    stream_handler.setLevel(logging.DEBUG)
+    app.logger.addHandler(stream_handler)
+
 def build_blog_list():
     blog_list = []
     for id in db:
@@ -63,8 +67,6 @@ def uploaded_file(filename):
 
 @app.route('/test', methods=['GET','POST'])
 def test():
-    #app.logger.debug('A debug message...')
-    #app.logger.warn('A warn message...')
     #app.logger.info('An info message...')
     if request.method == 'POST':
         file = request.files['file']
@@ -74,8 +76,10 @@ def test():
         app.logger.info('file.mimetype:     {}'.format(file.mimetype))
         app.logger.info('file.name:         {}'.format(file.name))
         if file and allowed_file(file.filename):
+            app.logger.info('file allowed')
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            app.logger.info('upload complete')
             return redirect(url_for('uploaded_file', filename=filename))
     return '''
     <!doctype html>
@@ -120,20 +124,49 @@ def buy_now():
 
 @app.route('/payment', methods=['GET','POST'])
 def payment():
-    customer = stripe.Customer.create(
-        email='customer@example.com',
-        card=request.form['stripeToken']
-    )
-
-    charge = stripe.Charge.create(
-        customer=customer.id,
-        amount=10000,
-        currency='usd',
-        description='CV Payment'
-    )
+    try:
+        customer = stripe.Customer.create(
+            email=request.form['email'],
+            card=request.form['stripeToken']
+        )
+        charge = stripe.Charge.create(
+            customer=customer.id,
+            amount=10000,
+            currency='usd',
+            receipt_email=request.form['email'],
+            description='CV Payment'
+        )
+    except stripe.error.CardError, e:
+        app.logger.warn(' Stripe Card Error:') 
+        app.logger.warn(e.json_body)
+        body = e.json_body
+        err = body['error']
+        return render_template('order_fail.html', ref=customer.id,
+                                                  message=err['message'],
+                                                  blogs=build_blog_list())
+    except stripe.error.InvalidRequestError, e:
+        app.logger.warn('Stripe API error:') 
+        app.logger.warn(e.json_body)
+        return render_template('error.html')
+    except stripe.error.AuthenticationError, e:
+        app.logger.warn('Stripe Authentication error:') 
+        app.logger.warn(e.json_body)
+        return render_template('error.html')
+    except stripe.error.APIConnectionError, e:
+        app.logger.warn('Stripe Network error:') 
+        app.logger.warn(e.json_body)
+        return render_template('order_retry.html')
+    except stripe.error.StripeError, e:
+        app.logger.warn('General Stripe error:') 
+        app.logger.warn(e.json_body)
+        return render_template('error.html')
+    except Exception, e:
+        app.logger.warn('General error:') 
+        app.logger.warn(e.json_body)
+        return render_template('error.html')
+    
     # upload file
     file = request.files['cv']
-    print dir(file)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -164,7 +197,8 @@ def payment():
                    )
     mail.send(msg)
 
-    return render_template('order_confirm.html', blogs=build_blog_list())
+    return render_template('order_confirm.html', ref=customer.id,
+                            blogs=build_blog_list())
 
 @app.route('/blog/<slug>')
 def blogs(slug):

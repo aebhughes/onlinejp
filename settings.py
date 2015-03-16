@@ -1,4 +1,6 @@
 SECRET_KEY = 'vhcGccovggJ2b+71zs0gAqu3KeWBhc8JzPy60KNrKlZq'
+DEBUG = True
+TESTING = True
 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = set(['DOC', 'DOCX', 'XLS', 'XLSX', 

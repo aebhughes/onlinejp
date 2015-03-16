@@ -9,7 +9,6 @@ cffi==0.9.1
 cryptography==0.8
 enum34==1.0.4
 itsdangerous==0.24
-paypalrestsdk==1.9.0
 pyOpenSSL==0.14
 pyasn1==0.1.7
 pycparser==2.10

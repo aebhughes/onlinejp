@@ -5,6 +5,8 @@ ALLOWED_EXTENSIONS = set(['DOC', 'DOCX', 'XLS', 'XLSX',
                           'ODT', 'PAGES', 'WPD', 'WPS', 
                           'RTF', 'PDF', 'TEX', 'TXT'])
 
+DEBUG = False
+
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465
 MAIL_USE_SSL = True

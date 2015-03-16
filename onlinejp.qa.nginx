@@ -6,10 +6,7 @@ upstream onlinejp_app {
     server {
 
         listen  80;
-        server_name yourcvservices.com www.yourcvservices.com
-                    onlinejobprofiles.com www.onlinejobprofiles.com
-                    onlinejobprofiles.co.za www.onlinejobprofiles.co.za
-                    onlinejobprofile.co.za onlinejobprofile.com;
+        server_name qa.onlinejobprofiles.com;
 
         client_max_body_size 4G;
 
