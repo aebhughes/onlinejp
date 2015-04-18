@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Screen{% endblock title %}
+
+{% block content %}
+<h1 class="text-center">Admin Screen</h1>
+
+<table class="table">
+    {% for blog in blogs %}
+    <tr>
+        <td>{{ blog.date }}</td>
+        <td>{{ blog.title }}</td>
+        <td><a href="/delete/{{ blog._id }}">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<form action="" method="POST" enctype=multipart/form-data>
+    <p>
+        <input type="text" name="title">
+        <input type=file name=file>
+        <input type=submit value=Upload class="btn btn-primary">
+    </p>
+</form>
+
+{%endblock %}

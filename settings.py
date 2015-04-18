@@ -5,6 +5,7 @@ TESTING = True
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = set(['DOC', 'DOCX', 'XLS', 'XLSX', 
                           'ODT', 'PAGES', 'WPD', 'WPS', 
+                          'HTML','HTM',
                           'RTF', 'PDF', 'TEX', 'TXT'])
 
 MAIL_SERVER = 'smtpout.secureserver.net'

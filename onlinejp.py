@@ -18,7 +18,7 @@ from werkzeug import secure_filename
 import logging
 from logging.handlers import RotatingFileHandler
 from operator import itemgetter
-import os
+import os, datetime
 
 import stripe
 
@@ -53,9 +53,9 @@ if not app.debug:
 def build_blog_list():
     blog_list = []
     for id in db:
-        blog_list.append(db[id])
-    
-    return sorted(blog_list, key=itemgetter, reverse=True) 
+        if 'email' not in id:
+            blog_list.append(db[id])
+    return blog_list 
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -208,6 +208,44 @@ def blogs(slug):
                                 blogs=build_blog_list())
     return render_template('no_blog_page.html', 
                             blogs=build_blog_list())
+
+def slugify(title):
+    slug = title.replace(' ','-')
+    return slug.lower()
+
+@app.route('/admin', methods=['GET','POST'])
+def admin():
+    if request.method == "POST":
+        file = request.files['file']
+        if file:
+            if allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                fname = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(fname)
+                f = open(fname, 'r').read()
+                blog = {
+                        '_id': slugify(request.form['title']),
+                        'title': request.form['title'],
+                        'date': str(datetime.date.today()),
+                        'body': f
+                        }
+                db.save(blog)
+            else:
+                flash('file type not allowed')
+        else:
+            flash('File upload failed')
+    blogs = []
+    for id in db:
+        if 'email' not in id:
+            blogs.append(db[id])
+    return render_template('admin.html', blogs=blogs)
+
+@app.route('/delete/<doc_id>', methods=['GET','POST'])
+def delete(doc_id):
+    doc = db[doc_id]
+    db.delete(doc)
+    return redirect(url_for('admin'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

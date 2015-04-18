@@ -81,6 +81,7 @@
                 {% for blog in blogs %}
                 <li>
                     <a href="/blog/{{ blog._id }}">{{ blog.title }}</a>
+                    <br><hr>
                 </li>
                 {% endfor %}
             </ul>
@@ -95,16 +96,6 @@
 
         <div class="col-md-2"><!-- Level 1: Right pane -->
 
-            <div> <!-- CustomSoft -->
-                <div class="text-center">
-                    <a href="http://customsoftuk.com" /><img 
-                       src="/static/half_csl_logo.png"></a>
-                </div>
-                <div class="text-center">
-                    The home of</br> &ldquo;Useful Stuff&rdquo;
-                </div>
-            </div> <!-- CustomSoft -->
-            <br><br>
             <div class="text-center"> <!-- Kalahari -->
                 <iframe 
                     onload="if (this.src == '') {
