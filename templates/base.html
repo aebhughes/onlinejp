@@ -9,7 +9,32 @@
             online job profiles 
     </title>
 
-    {% include "meta_tags.html" %}
+    <meta name="decription"
+          content="A good LinkedIn profile and effectivly constructed CV are
+                   are essential tools for a successful job search. Today,
+                   recruiters use LinkedIn almost exclusively to find
+                   canditates. Coupled with an effective CV increases
+                   your chance of an interviews by an order of magnitude." />
+    <meta name="keywords" 
+          content="
+                   online, cv, resume, job, jobs, 
+                   profile, profiles, linkedin, 
+                   online job profiles" />
+    <meta property="og:title" content="Your On Line Job Profile" />
+    <meta property="og:type" content="image/jpg" />
+    <meta property="og:image" 
+          content="http://onlinejobprofiles.com/static/PuzzleMan.jpg" />
+    <meta property="og:description" 
+          content="Your Online Profile and CV Services" />
+    {% block meta %} {% endblock %}
+    <meta property="og:locale" content="en_GB" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" 
+          content="width=device-width, initial-scale=1">
+    <meta name="author" 
+          content="AEB Hughes. CustomSoft ZA. Home of Useful Stuff">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" 
           href="/static/favicon.ico" 
@@ -96,15 +121,6 @@
 
         <div class="col-md-2"><!-- Level 1: Right pane -->
 
-            <div class="text-center"> <!-- Kalahari -->
-                <iframe 
-                    onload="if (this.src == '') {
-                    this.src='http://etrader.kalahari.com/view/renderlink?linkId=3&affiliateId=2002424&imageIndex=0&siteUrl='+document.URL};" 
-                    width="120" 
-                    height="60" 
-                    frameborder='0'> 
-                </iframe>
-            </div>
             <br>
             <div class="text-center"> <!-- Facebook Like -->
                 <div class="fb-like" 

@@ -2,6 +2,10 @@
 
 {% block title %}{{ blog.title }}{% endblock %}
 
+{% block meta %}
+    <meta property="og:url" content="http://onlinejobprofiles.com/blog/{{ blog._id }}" />
+{% endblock %}
+
 {% block content %}
 
 {{ blog.body|safe }}

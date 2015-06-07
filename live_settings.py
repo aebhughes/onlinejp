@@ -1,5 +1,8 @@
 SECRET_KEY = 'vhcGccovggJ2b+71zs0gAqu3KeWBhc8JzPy60KNrKlZq'
 
+COUCHUSER = 'aebhughes'
+COUCHPW = 'CustomSoftHer0!'
+
 UPLOAD_FOLDER = '/var/oljp'
 ALLOWED_EXTENSIONS = set(['DOC', 'DOCX', 'XLS', 'XLSX', 
                           'ODT', 'PAGES', 'WPD', 'WPS', 

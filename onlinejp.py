@@ -22,17 +22,16 @@ import os, datetime
 
 import stripe
 
-import couchdb
-
-couch = couchdb.Server()
-couch.resource.credentials = ('aebhughes', 'CustomSoftHer0!')
-db = couch['yourcv']
-
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app)
 app.config.from_object('settings')
 mail = Mail(app)
 stripe.api_key = app.config['STRIPE_KEY']
+
+import couchdb
+couch = couchdb.Server()
+couch.resource.credentials = (app.config['COUCHUSER'], app.config['COUCHPW'])
+db = couch['yourcv']
 
 
 # Logging
@@ -210,8 +209,8 @@ def blogs(slug):
                             blogs=build_blog_list())
 
 def slugify(title):
-    slug = title.replace(' ','-')
-    return slug.lower()
+    title = title.replace('?','')
+    return title.replace(' ','-').lower()
 
 @app.route('/admin', methods=['GET','POST'])
 def admin():

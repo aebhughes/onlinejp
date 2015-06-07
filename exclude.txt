@@ -1,6 +1,9 @@
-.*
+.git*
 exclude.txt
 onlinejp.log
 py2env/
 *.pyc
+*.swp
+*.swo
 static/upload/
+fabric.py

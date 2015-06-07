@@ -2,6 +2,9 @@ SECRET_KEY = 'vhcGccovggJ2b+71zs0gAqu3KeWBhc8JzPy60KNrKlZq'
 DEBUG = True
 TESTING = True
 
+COUCHUSER = 'aebhughes'
+COUCHPW = 'fr3dalex'
+
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = set(['DOC', 'DOCX', 'XLS', 'XLSX', 
                           'ODT', 'PAGES', 'WPD', 'WPS', 
